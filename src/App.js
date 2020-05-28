@@ -19,11 +19,8 @@ function App() {
 			hour: new Date().getHours(),
 			milliseconds: new Date().getMilliseconds(),
 		});
-	}, 50);
-
-	useInterval(() => {
 		setTimeString(new Date().toLocaleTimeString());
-	}, 500);
+	}, 50);
 
 	const seconds_rotation = () => {
 		return ((time.seconds + time.milliseconds / 1000) * 6).toFixed(2);
@@ -34,7 +31,10 @@ function App() {
 	};
 
 	const hours_rotation = () => {
-		return (Math.abs(12 - time.hour) + time.minutes / 60) * 30;
+		if (time.hour > 12) {
+			return (time.hour - 12 + time.minutes / 60) * 30;
+		}
+		return (time.hour + time.minutes / 60) * 30;
 	};
 
 	return (

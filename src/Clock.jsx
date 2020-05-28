@@ -16,7 +16,9 @@ const useStyles = createUseStyles({
 		height: "375px",
 		width: "375px",
 		border: { radius: "50%" },
-		background: "white",
+		background: "rgb(255,255,255)",
+		background:
+			"radial-gradient(circle, rgba(255,255,255,1) 50%, rgba(217,235,255,1) 100%);",
 	},
 	middle: {
 		position: "absolute",
@@ -28,6 +30,38 @@ const useStyles = createUseStyles({
 		border: { radius: "50%" },
 		background: "black",
 	},
+	noon: {
+		position: "absolute",
+		left: "185px",
+		margin: "auto",
+		height: "30px",
+		width: "5px",
+		background: "black",
+	},
+	six: {
+		position: "absolute",
+		left: "185px",
+		top: "345px",
+		margin: "auto",
+		height: "30px",
+		width: "5px",
+		background: "black",
+	},
+	three: {
+		position: "absolute",
+		left: "345px",
+		top: "185px",
+		height: "5px",
+		width: "30px",
+		background: "black",
+	},
+	nine: {
+		position: "absolute",
+		top: "185px",
+		height: "5px",
+		width: "30px",
+		background: "black",
+	},
 	secondHand: {
 		position: "absolute",
 		height: "375px",
@@ -37,8 +71,12 @@ const useStyles = createUseStyles({
 	},
 	visibleSecondHand: {
 		position: "relative",
-		height: "50%",
+		height: "48%",
 		background: "red",
+	},
+	hiddenSecondHand: {
+		position: "relative",
+		height: "2%",
 	},
 	minuteHand: {
 		position: "absolute",
@@ -49,11 +87,11 @@ const useStyles = createUseStyles({
 	},
 	hiddenMinuteHand: {
 		position: "relative",
-		height: "5%",
+		height: "7%",
 	},
 	visibleMinuteHand: {
 		position: "relative",
-		height: "45%",
+		height: "43%",
 		background: "black",
 	},
 	hourHand: {
@@ -82,6 +120,7 @@ const Clock = (props) => {
 			<div className={classes.back}>
 				<div className={classes.face}>
 					<div className={classes.secondHand}>
+						<div className={classes.hiddenSecondHand}></div>
 						<div className={classes.visibleSecondHand}></div>
 					</div>
 					<div className={classes.minuteHand}>
@@ -93,6 +132,10 @@ const Clock = (props) => {
 						<div className={classes.visibleHourHand}></div>
 					</div>
 					<div className={classes.middle}></div>
+					<div className={classes.noon}></div>
+					<div className={classes.six}></div>
+					<div className={classes.nine}></div>
+					<div className={classes.three}></div>
 				</div>
 			</div>
 		</>

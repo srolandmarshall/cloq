@@ -54,7 +54,7 @@ const useStyles = createUseStyles({
 		height: "375px",
 		left: "185px",
 		width: "5px",
-		transform: (props) => props.seconds,
+		transform: (props) => props.sec,
 	},
 	visibleSecondHand: {
 		position: "relative",
@@ -66,7 +66,7 @@ const useStyles = createUseStyles({
 		height: "375px",
 		left: "185px",
 		width: "5px",
-		transform: (props) => props.minutes,
+		transform: (props) => props.min,
 	},
 	hiddenMinuteHand: {
 		position: "relative",
@@ -98,29 +98,33 @@ const useStyles = createUseStyles({
 const Clock = (props) => {
 	const classes = useStyles(props);
 
-	const { time } = props;
 	return (
-		<div className={classes.back}>
-			<div className={classes.face}>
-				<div className={classes.secondHand}>
-					<div className={classes.visibleSecondHand}></div>
+		<>
+			<div className={classes.back}>
+				<div className={classes.face}>
+					<div className={classes.secondHand}>
+						<div className={classes.visibleSecondHand}></div>
+					</div>
+					<div className={classes.minuteHand}>
+						<div className={classes.hiddenMinuteHand}></div>
+						<div className={classes.visibleMinuteHand}></div>
+					</div>
+					<div className={classes.hourHand}>
+						<div className={classes.hiddenHourHand}></div>
+						<div className={classes.visibleHourHand}></div>
+					</div>
+					<div className={classes.middle}></div>
 				</div>
-				<div className={classes.minuteHand}>
-					<div className={classes.hiddenMinuteHand}></div>
-					<div className={classes.visibleMinuteHand}></div>
-				</div>
-				<div className={classes.hourHand}>
-					<div className={classes.hiddenHourHand}></div>
-					<div className={classes.visibleHourHand}></div>
-				</div>
-				<div className={classes.middle}></div>
 			</div>
-		</div>
+		</>
 	);
 };
 
 function App() {
 	const [time, setTime] = useState(Date.now());
+	const [milliseconds, setMilliseconds] = useState(
+		new Date().getMilliseconds()
+	);
 	const [seconds, setSeconds] = useState(new Date().getSeconds());
 	const [minutes, setMinutes] = useState(new Date().getMinutes());
 	const [hour, setHour] = useState(new Date().getHours());
@@ -128,22 +132,23 @@ function App() {
 
 	useInterval(() => {
 		setTime(Date.now());
+		setMilliseconds(new Date().getMilliseconds());
 		setSeconds(new Date().getSeconds());
+		setMinutes(new Date().getMinutes());
 		setTimeString(new Date().toLocaleTimeString());
-	}, 500);
+	}, 50);
 
 	useInterval(() => {
-		setMinutes(new Date().getMinutes());
 		setHour(new Date().getHours());
-	}, 1000);
+	}, 300);
 	return (
 		<div className="App">
 			<div>{timeString}</div>
-			<div>{time}</div>
+
 			<Clock
-				seconds={`rotate(${seconds * 6}deg)`}
-				minutes={`rotate(${minutes * 6}deg)`}
-				hour={`rotate(${Math.abs(12 - hour) * 30 + (minutes / 60) * 30}deg)`}
+				sec={`rotate(${((seconds + milliseconds / 1000) * 6).toFixed(2)}deg)`}
+				min={`rotate(${((minutes + seconds / 60) * 6).toFixed(2)}deg)`}
+				hour={`rotate(${(Math.abs(12 - hour) + minutes / 60) * 30}deg)`}
 				time={time}
 			/>
 		</div>
